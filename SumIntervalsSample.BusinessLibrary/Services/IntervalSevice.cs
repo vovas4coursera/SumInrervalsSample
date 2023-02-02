@@ -18,6 +18,23 @@ public class IntervalSevice : BaseService<IntervalSevice>, IIntervalSevice
     {
         Logger.LogInformation($"intervals given: [ {string.Join(", ", intervals)} ]");
 
-        return intervals.Count;
+        var corruptedInervals = intervals.Where(item => item.From > item.To);
+        if (corruptedInervals.Any())
+        {
+            throw new ArgumentOutOfRangeException($"To-value should be GreaterThanOrEqualTo From-value. corrupted intervals: [ {string.Join(", ", intervals)} ]");
+        }
+
+
+        List<string> splittedIntervals = new();
+        intervals.ForEach(item =>
+        {
+            var itemSplittedInervals = Enumerable.Range(item.From, item.To - item.From) // generate atomic interlvals for item
+                .Select(i => i.ToString() + (i + 1).ToString()) // project to string representation
+                .ToList();
+
+            splittedIntervals.AddRange(itemSplittedInervals);
+        });
+
+       return splittedIntervals.Distinct().Count(); 
     }
 }

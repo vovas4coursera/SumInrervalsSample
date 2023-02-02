@@ -6,12 +6,12 @@ namespace SumIntervalsSample.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class IntervalSeviceController : ControllerBase
+public class IntervalController : ControllerBase
 {
     private readonly IIntervalSevice _intervalSeavice;
-    private readonly ILogger<IntervalSeviceController> _logger;
+    private readonly ILogger<IntervalController> _logger;
 
-    public IntervalSeviceController(IIntervalSevice intervalSevice, ILogger<IntervalSeviceController> logger)
+    public IntervalController(IIntervalSevice intervalSevice, ILogger<IntervalController> logger)
     {
         this._intervalSeavice = intervalSevice;
         _logger = logger;
